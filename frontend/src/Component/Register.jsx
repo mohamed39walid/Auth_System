@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
+import registerbackground from './Images/loginbackground.jpg';
 
 function Register() {
   const [name, setName] = useState("");
@@ -9,12 +10,14 @@ function Register() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       navigate("/"); // Redirect to home or protected route if already logged in
     }
   }, [navigate]);
+
   const handleRegister = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
@@ -45,12 +48,15 @@ function Register() {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="relative flex items-center justify-center min-h-screen bg-gray-100">
+        <img src={registerbackground} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
+        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
         <form
           onSubmit={handleRegister}
-          className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm"
+          className="relative bg-white p-8 rounded-lg shadow-md w-full max-w-sm z-10"
+          style={{ backdropFilter: "blur(10px)", backgroundColor: "rgba(255, 255, 255, 0.8)" }}
         >
-          <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Register</h2>
           {error && (
             <div className="mb-4 text-red-500 text-center">
               {error}

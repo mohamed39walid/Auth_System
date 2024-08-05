@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import loginbackground from './Images/loginbackground.jpg';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    if(token){
-        navigate('/')
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/');
     }
-  },[navigate])
+  }, [navigate]);
+
   const handleLogin = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
@@ -28,9 +31,7 @@ function Login() {
 
       if (response.ok) {
         const token = data.token;
-
         localStorage.setItem("token", token);
-
         window.location.href = "/"; // Redirect to home or protected route
       } else {
         console.error(data.message);
@@ -43,12 +44,15 @@ function Login() {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="relative flex items-center justify-center min-h-screen bg-gray-100">
+        <img src={loginbackground} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
+        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
         <form
           onSubmit={handleLogin}
-          className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm"
+          className="relative bg-white p-8 rounded-lg shadow-md w-full max-w-sm z-10"
+          style={{ backdropFilter: "blur(10px)", backgroundColor: "rgba(255, 255, 255, 0.8)" }}
         >
-          <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Login</h2>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
